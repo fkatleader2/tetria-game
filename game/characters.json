@@ -1,0 +1,39 @@
+[
+    { "name": "warrior", 
+        "data": {
+            "linesClear": {
+                "combo": [0, 1, 1, 2, 2, 3, 3, 4, 4],
+                "cleared": {
+                    "default": [0, 0, 1, 2, 4],
+                    "spin": { "multiplier": 2 },
+                    "b2b": { "add": 2 }
+                },
+                "spins": ["t"],
+                "b2b": ["spins", "4"],
+            },
+            "abilities": [
+                {}
+            ]
+        }
+    },
+    { "name": "tank",
+        "data": {
+
+        }
+    },
+    { "name": "juggernaut",
+        "data": {
+
+        }
+    },
+    { "name": "healer",
+        "data": {
+
+        }
+    },
+    { "name": "mage",
+        "data": {
+
+        }
+    },
+]

@@ -1,0 +1,119 @@
+<head>
+    <title>Tetresse 3.0</title>
+    <script src="modules/jquery.js"></script>
+    <script src="tetresse.js"></script>
+    <script src="modules/characters.js"></script>
+    <script src="modules/graphics.js"></script>
+    <script src="modules/tetria.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/tetria.css">
+</head>
+<body onload="tetresse.modules.tetria.loaded()">
+    <div id="loading">Loading...</div>
+    <script>tetresse.modules.tetria.loading();</script>
+    <div id="results-container" style="z-index: 1;">
+        <div id="results">
+            <div class="menu-navbar">
+                <span class="title">Results:</span>
+                <div id="settings-close" class="close button">Close</div>
+                <span id="settings-tabs" class="tabs" selected="players">
+                    <ul>
+                        <li class="active button">Highlights</li>
+                        <li class="button">Stats</li>
+                        <li class="button">Deep Stats</li>
+                    </ul>
+                </span>
+                <hr noshade>                
+            </div>
+        </div>
+    </div>
+    <div id="settings-menu-container" class="hidden">
+        <div id="settings-menu">
+            <div class="menu-navbar">
+                <span class="title">Settings:</span>
+                <div id="settings-close" class="close button">Close</div>
+                <span id="settings-tabs" class="tabs" selected="general">
+                    <ul>
+                        <li id="settings-tabs-general" class="active button">General</li>
+                        <li id="settings-tabs-keybinds" class="button">Keybinds</li>
+                        <li id="settings-tabs-graphics" class="button">Graphics</li>
+                    </ul>
+                </span>
+                <hr noshade>
+            </div>
+            <div id="settings-area">
+                <div value="general" class="">general</div>
+                <div value="keybinds" class="hidden">
+                    <div id="settings-area-keybinds-table-container">
+                        <table id="settings-area-keybinds-table" selected="">
+                            <tbody>
+                                <tr>
+                                    <th>Action</th><th>Code</th><th title="May not be accurate">Keys</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="settings-area-keybinds-select" class="hidden">
+                        Select<hr noshade>
+                        <div class="button">Edit</div>
+                        <div class="button">Clear</div>
+                    </div>
+                    <div id="settings-area-keybinds-edit" class="hidden">Edit keybind</div>
+                </div>
+                <div value="graphics" class="hidden">graphics</div>
+            </div>
+        </div>
+    </div>
+    <div id="tetresse-container">
+        <tetresse>
+            <div id="game-0"></div>
+            <div id="game-1"></div>
+            <div id="game-2"></div>
+            <div id="game-3"></div>
+            <div id="game-4"></div>
+            <div id="game-5"></div>
+        </tetresse>
+    </div>
+    <div id="sidebar-container">
+        <div id="sidebar">
+            <div id="player-list">
+                <ul class="wrapChildText">
+                    <li>player1</li>
+                    <li>player2asdfasdfasdfadfasdfadfas</li>
+                    <li>player3</li>
+                    <li>player4</li>
+                    <li>player5</li>
+                    <li>player6</li>
+                    <hr>
+                </ul>
+            </div>
+            <div id="chat-area-container" onload="updateScroll()">
+                <div id="chat-area" class="wrapChildText">
+                    <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                    <div>p2: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                    <div>p1: asfawoeijfawfjoeijawefafwoejoia wfjoaw</div>
+                    <div>p2: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                    <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                    <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                    <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                </div>
+                <script>
+                    function updateScroll() { // TODO add this to tetria.js
+                        var ele = document.getElementById("#chat-area");
+                        element.scrollTop = element.scrollHeight;
+                    }
+                </script>
+            </div>
+            <div id="chat-message" class="wrapChildText">
+                <div id="chat-input" contenteditable="true"></div>
+            </div>
+            <div id="options-area">
+                <div id="settings-button-container">
+                    <div id="settings-button" class="button">Settings</div>
+                </div>
+                <div id="exit-button-container">
+                    <div id="exit-button" class="button">Exit</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,15 @@
+tetresse {
+    display: grid;
+}
+
+tetresse div {
+
+}
+
+tetresse div canvas {
+    position: absolute;
+}
+
+#game-1 {
+    grid-area: p1;
+}
