@@ -10,7 +10,7 @@
                 },
                 "spins": ["t"],
                 "b2b": ["spins", "4"],
-            },
+            }
             "abilities": [
                 {}
             ]
@@ -25,7 +25,7 @@
         "data": {
 
         }
-    },
+    }
     { "name": "healer",
         "data": {
 
