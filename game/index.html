@@ -1,16 +1,18 @@
 <head>
     <title>Tetresse 3.0</title>
     <script src="modules/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="tetresse.js"></script>
     <script src="modules/characters.js"></script>
     <script src="modules/graphics.js"></script>
     <script src="modules/tetria.js"></script>
+    <script src="modules/tetriasocket.js"></script>
     <link rel="stylesheet" type="text/css" href="css/tetria.css">
 </head>
 <body onload="tetresse.modules.tetria.loaded()">
     <div id="loading">Loading...</div>
     <script>tetresse.modules.tetria.loading();</script>
-    <div id="results-container" style="z-index: 1;">
+    <div id="results-container" style="z-index: 1;" class="hidden">
         <div id="results">
             <div class="menu-navbar">
                 <span class="title">Results:</span>
