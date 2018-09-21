@@ -105,7 +105,7 @@ tetresse.modules.tetria = {
                 if (rooms.length == undefined) { rooms = [rooms]; }
                 var table = $('#rooms-list')[0];
                 for (var i = 0; i < rooms.length; i++) {
-                    if (table.children[table.children.length - 1].children.length == 2) {
+                    if (table.children.length == 0 || table.children[table.children.length - 1].children.length == 2) {
                         table.appendChild(document.createElement("div"));
                     }
                     var title = document.createElement("span");
@@ -123,8 +123,11 @@ tetresse.modules.tetria = {
                     ele.classList.add("button");
                     ele.appendChild(title);
                     ele.appendChild(players);
-
                     table.children[table.children.length - 1].appendChild(ele);
+
+                    $("#" + ele.id).on("click", function(e) {
+                        tetresse.modules.tetriasocket.rooms.join(e.target.id.substring(5));
+                    });
                 }
             },
             update(room) {
