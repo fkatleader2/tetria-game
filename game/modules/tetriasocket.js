@@ -12,7 +12,7 @@ tetresse.modules.tetriasocket = {
     initRooms() {
         // on: refresh, joined, left, created
         // emit: join, create, leave
-        this.socket.on("refresh", function(data) { // data: [{id, name, curPlayers, maxPlayers}, {}]
+        this.socket.on("roomsRefresh", function(data) { // data: [{id, name, curPlayers, maxPlayers}, {}]
             for (var i = 0; i < data.length; i++)
                 this.rooms.add(data[i]);
         });

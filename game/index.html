@@ -9,7 +9,7 @@
     <script src="modules/tetriasocket.js"></script>
     <link rel="stylesheet" type="text/css" href="css/tetria.css">
 </head>
-<body onload="">
+<body onload="tetresse.modules.tetria.loaded()">
     <!--tetresse.modules.tetria.loaded()-->
     <div id="loading" class="hidden">Loading...</div>
     <script>tetresse.modules.tetria.loading();</script>
@@ -68,12 +68,12 @@
     </div>
     <div id="tetresse-container" class="hidden">
         <tetresse>
-            <div id="game-0"></div>
-            <div id="game-1"></div>
-            <div id="game-2"></div>
-            <div id="game-3"></div>
-            <div id="game-4"></div>
-            <div id="game-5"></div>
+            <div id="game-0" class="hidden"></div>
+            <div id="game-1" class="hidden"></div>
+            <div id="game-2" class="hidden"></div>
+            <div id="game-3" class="hidden"></div>
+            <div id="game-4" class="hidden"></div>
+            <div id="game-5" class="hidden"></div>
         </tetresse>
     </div>
     <div id="sidebar-container" class="hidden">
@@ -123,31 +123,14 @@
         <div id="rooms-title">Tetria Rooms</div>
         <div id="rooms-list-container">
             <div id="rooms-list" class="gTable">
-                <div>
-                    <div id="room1" class="button"><span>Room 1 Title</span>
-                        <div class="players">
-                            <div class="filled"></div>
-                            <div class="filled"></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div id="room2" class="button">Room 2 Title</div>
-                </div>
-                <div>
-                    <div id="room3" class="button">Room 3 Title</div>
-                    <div id="room4" class="button">Room 4 Title</div>
-                </div>
             </div>
         </div>
         <div id="rooms-options">
             <div style="text-align: center;">Create</div>
             <hr>
             <span>Room Name:</span>
-            <div class="text-input" contenteditable="true"></div>
-            <div class="button">Create</div>
+            <div id="roomsName", class="text-input" contenteditable="true"></div>
+            <div id="roomsCreate" class="button">Create</div>
         </div>
     </div>
 </body>

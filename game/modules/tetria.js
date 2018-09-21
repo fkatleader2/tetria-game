@@ -37,6 +37,7 @@ tetresse.modules.tetria = {
             tetresse.modules.tetria.resize();
         };
         tetresse.modules.tetria.resize();
+
         document.getElementById("loading").style.display = "none";
     },
     resize() { // resize the games to be the same size as their groups
@@ -92,6 +93,11 @@ tetresse.modules.tetria = {
             },
         },
         rooms: {
+            setup() {
+                $("#roomsCreate").on("click", function(e) {
+                    tetresse.modules.tetriasocket.rooms.create(document.getElementById("roomsName").innerHTML);
+                });
+            },
             clear() {
 
             },
