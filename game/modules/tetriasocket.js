@@ -14,7 +14,7 @@ tetresse.modules.tetriasocket = {
         // emit: join, create, leave
         this.socket.on("roomsRefresh", function(data) { // data: [{id, name, curPlayers, maxPlayers}, {}]
             for (var i = 0; i < data.length; i++)
-                this.rooms.add(data[i]);
+                tetress.modules.tetriasocket.rooms.add(data[i]);
         });
         this.socket.on("roomsJoined", function(data) { // data: {id} TODO make this neater
             var r = tetresse.modules.tetriasocket.rooms;
@@ -46,16 +46,16 @@ tetresse.modules.tetriasocket = {
             tetresse.modules.tetria.components.rooms.add(data);
         },
         refresh() {
-            var socket; if (socket = this.getSocket() == null) return;
+            var socket; if ((socket = this.getSocket()) == null) return;
             socket.emit("roomsGet");
         },
         sortBy(stuff) { /* TODO */},
         create(name) {
-            var socket; if (socket = this.getSocket() == null) return;
+            var socket; if ((socket = this.getSocket()) == null) return;
             socket.emit("roomsCreate", {name: name});
         },
         join(id) {
-            var socket; if (socket = this.getSocket() == null) return;
+            var socket; if ((socket = this.getSocket()) == null) return;
             socket.emit("roomsJoin", {id: id});
         },
         getSocket() {
