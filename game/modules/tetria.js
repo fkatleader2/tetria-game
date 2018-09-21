@@ -89,6 +89,52 @@ tetresse.modules.tetria = {
                             list.children[i].classList.toggle("hidden");
                     }
                 });
+            },
+        },
+        rooms: {
+            clear() {
+
+            },
+            add(rooms) { // rooms can be a single room or array of rooms: {id, name, curPlayers, maxPlayers}
+                if (rooms.length == undefined) { rooms = [rooms]; }
+                var table = $('#rooms-list')[0];
+                for (var i = 0; i < rooms.length; i++) {
+                    if (table.children[table.children.length - 1].children.length == 2) {
+                        table.appendChild(document.createElement("div"));
+                    }
+                    var title = document.createElement("span");
+                    title.innerHTML = rooms[i].name;
+                    var players = document.createElement("div");
+                    players.classList.add("players");
+                    for (var j = 0; j < rooms[i].maxPlayers; j++) {
+                        var box = document.createElement("div");
+                        if (j < rooms[i].curPlayers) box.classList.add("filled");
+                        players.appendChild(box);
+                    }
+
+                    var ele = document.createElement("div");
+                    ele.id = "room-" + rooms[i].id;
+                    ele.classList.add("button");
+                    ele.appendChild(title);
+                    ele.appendChild(players);
+
+                    table.children[table.children.length - 1].appendChild(ele);
+                }
+            },
+            update(room) {
+                var ele = document.getElementById("room-" + room.id);
+
+                var players = ele.children[1];
+                players.forEach(function(e) {
+                    if (i < room.curPlayers) e.classList.add("filled");
+                    else e.classList.remove("filled");
+                });
+            },
+            remove(id) {
+                var ele = document.getElementById("room-" + id);
+                ele.parentNode.removeChild(ele);
+
+                // TODO collapse following elements
             }
         }
     },

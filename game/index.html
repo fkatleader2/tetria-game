@@ -9,8 +9,9 @@
     <script src="modules/tetriasocket.js"></script>
     <link rel="stylesheet" type="text/css" href="css/tetria.css">
 </head>
-<body onload="tetresse.modules.tetria.loaded()">
-    <div id="loading">Loading...</div>
+<body onload="">
+    <!--tetresse.modules.tetria.loaded()-->
+    <div id="loading" class="hidden">Loading...</div>
     <script>tetresse.modules.tetria.loading();</script>
     <div id="results-container" style="z-index: 1;" class="hidden">
         <div id="results">
@@ -24,7 +25,7 @@
                         <li class="button">Deep Stats</li>
                     </ul>
                 </span>
-                <hr noshade>                
+                <hr noshade>
             </div>
         </div>
     </div>
@@ -65,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div id="tetresse-container">
+    <div id="tetresse-container" class="hidden">
         <tetresse>
             <div id="game-0"></div>
             <div id="game-1"></div>
@@ -75,8 +76,8 @@
             <div id="game-5"></div>
         </tetresse>
     </div>
-    <div id="sidebar-container">
-        <div id="sidebar">
+    <div id="sidebar-container" class="hidden">
+        <div id="sidebar" class="hidden">
             <div id="player-list">
                 <ul class="wrapChildText">
                     <li>player1</li>
@@ -116,6 +117,37 @@
                     <div id="exit-button" class="button">Exit</div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="rooms-container">
+        <div id="rooms-title">Tetria Rooms</div>
+        <div id="rooms-list-container">
+            <div id="rooms-list" class="gTable">
+                <div>
+                    <div id="room1" class="button"><span>Room 1 Title</span>
+                        <div class="players">
+                            <div class="filled"></div>
+                            <div class="filled"></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div id="room2" class="button">Room 2 Title</div>
+                </div>
+                <div>
+                    <div id="room3" class="button">Room 3 Title</div>
+                    <div id="room4" class="button">Room 4 Title</div>
+                </div>
+            </div>
+        </div>
+        <div id="rooms-options">
+            <div style="text-align: center;">Create</div>
+            <hr>
+            <span>Room Name:</span>
+            <div class="text-input" contenteditable="true"></div>
+            <div class="button">Create</div>
         </div>
     </div>
 </body>

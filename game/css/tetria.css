@@ -6,6 +6,7 @@ body {
     -moz-user-select: none; /* Firefox 2+ */
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Standard syntax */
+    font-family: Montserrat, sans-serif;
 }
 
 #loading {
@@ -270,7 +271,7 @@ body {
         }
 
         #settings-area-keybinds-table-container {
-            background: #fbfbff; 
+            background: #fbfbff;
             display: inline-block;
             max-width: 50%;
             height: auto !important;
@@ -311,6 +312,105 @@ body {
             /*display: inline-block;*/
             float: left;
             margin-right: 0;
+        }
+
+/* rooms */
+    #rooms-container {
+        width: 1000px;
+        height: 100%;
+        margin: auto;
+        background: #373671;
+        position: relative;
+        font-size: 20px;
+    }
+    
+    #rooms-title {
+        background: #b3b1f9;
+        text-align: center;
+        margin: 0 10px 5px 10px;
+        border-radius: 0 0 5px 5px;
+        position: relative;
+        font-size: 30px;
+    }
+    
+    #rooms-list-container {
+        left: 10px;
+        width: 680px;
+        height: 590px;
+        border-radius: 5px 0 0 5px;
+        padding: 5px;
+        position: absolute;
+        background: #b3b1f9;
+        overflow-y: scroll;
+    }
+    
+    #rooms-list {
+        width: 100%;
+    }
+
+    /* room elements */
+        #rooms-list>div>div {
+            background: #e9e8ff;
+            border: 4px solid #b3b1f9;
+            border-top-width: 2px;
+            border-bottom-width: 2px;
+            padding: 0 6px;
+            width: 50%;
+        }
+        
+        #rooms-list>div>div:hover {
+            background-color: #9590ef;
+        }
+        
+        #rooms-list>div>div>.players {
+            display: inline-block;
+            /*border-left: 1px solid black;*/
+            padding-left: 3px;
+            margin-left: 6px;
+        }
+        
+        #rooms-list>div>div>.players>div {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: grey;
+            border: 1px solid black;
+            margin-right: 6px;
+        }
+        
+        #rooms-list>div>div>.players>div.filled {
+            background: black;
+        }
+    
+    #rooms-options {
+        right: 10;
+        width: 280px;
+        height: 590px;
+        border-radius: 0 5px 5px 0;
+        padding: 5px;
+        position: absolute;
+        background: #cccbf3;
+    }
+    
+    /* rooms options */
+        #rooms-options>div {
+
+        }
+
+        #rooms-options>span {
+            display: inline-block;
+            margin: 10px 0 3px 0;
+        }
+        
+        #rooms-options>div.button {
+            margin-top: 20px;
+            padding: 5px 0;
+            background: #ef7878;
+            text-align: center;
+        }
+        
+        #rooms-options>div.button:hover {
+            background: #dc4444;
         }
 
 /* menu-navbar */
@@ -365,7 +465,7 @@ body {
             display: inline-block;
             padding: 1% 2%;
             border-radius: 3px 3px 0 0;
-            margin-right: 2%; 
+            margin-right: 2%;
             background-color: #d5d5f9;
         }
 
@@ -395,21 +495,43 @@ body {
     }
 
     .wraptext {
-        white-space: pre-wrap;      /* CSS3 */   
-        white-space: -moz-pre-wrap; /* Firefox */    
-        white-space: -pre-wrap;     /* Opera <7 */   
-        white-space: -o-pre-wrap;   /* Opera 7 */    
+        white-space: pre-wrap;      /* CSS3 */
+        white-space: -moz-pre-wrap; /* Firefox */
+        white-space: -pre-wrap;     /* Opera <7 */
+        white-space: -o-pre-wrap;   /* Opera 7 */
         word-wrap: break-word;      /* IE */
     }
 
     .wrapChildText * {
-        white-space: pre-wrap;      /* CSS3 */   
-        white-space: -moz-pre-wrap; /* Firefox */    
-        white-space: -pre-wrap;     /* Opera <7 */   
-        white-space: -o-pre-wrap;   /* Opera 7 */    
+        white-space: pre-wrap;      /* CSS3 */
+        white-space: -moz-pre-wrap; /* Firefox */
+        white-space: -pre-wrap;     /* Opera <7 */
+        white-space: -o-pre-wrap;   /* Opera 7 */
         word-wrap: break-word;      /* IE */
+    }
+    
+    .text-input {
+        background: white;
+        padding: 4px;
+        border-radius: 4px;
+    }
+    
+    .text-input:focus {
+        background: #e6e6e6;
     }
 
     hr {
         margin: 1% 0;
+    }
+
+    .gTable {
+        display: table;
+    }
+
+    .gTable>div {
+        display: table-row;
+    }
+
+    .gTable>div>div {
+        display: table-cell;
     }
