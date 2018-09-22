@@ -87,10 +87,12 @@ tetresse.modules.tetria = {
                     });
                 }
             },
-            update(room, amount) {
+            update(room, amount) { 
                 if (room.id == null) { console.log("room does not have id"); return; }
-                if (amount !== undefined)
-                    room.numPlayers += amount;
+                if (amount !== undefined) {
+                    if (room.numPlayers !== undefined) room.numPlayers += amount;
+                    else this.rooms[room.id].numPlayers += amount;
+                }
                 for (var v in room)
                     this.rooms[room.id][v] = room[v];
 
@@ -156,7 +158,7 @@ tetresse.modules.tetria = {
                 //         });
                 //     });
                 // },
-                
+
                 tetresse.modules.tetria.resize();
             },
             clean() {
