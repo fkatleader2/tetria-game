@@ -19,12 +19,12 @@ tetresse.modules.tetriasocket = {
         this.socket.on("roomsJoined", function(data) { // data: {id} TODO make this neater
             var r = tetresse.modules.tetriasocket.rooms;
             if (r.rooms[data.id] === undefined) { console.log("room id [" + data.id + "] undefined"); return; }
-            r.update(data.id, r.rooms[data.id].numPlayers + 1);
+            r.update(data.id, {numPlayers: r.rooms[data.id].numPlayers + 1});
         });
         this.socket.on("roomsLeft", function(data) { // data: {id}
             var r = tetresse.modules.tetriasocket.rooms;
             if (r[data.id] === undefined) { console.log("room id [" + data.id + "] undefined"); return; }
-            r.update(data.id, r[data.id].numPlayers - 1);
+            r.update(data.id, {numPlayers: r[data.id].numPlayers - 1});
         });
         this.socket.on("roomsCreated", function(data) { // data: {id, name, curPlayers, maxPlayers}
             tetresse.modules.tetriasocket.rooms.add(data);
