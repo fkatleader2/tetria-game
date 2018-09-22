@@ -424,7 +424,6 @@ tetresse.modules.graphics = {
         resize(game, n) {
             var graphics = game.modules.graphics;
             var gridDimensions = tetresse.utils.grid.getTotals(graphics.grid);
-
             if (n == null) {
                 // update canvas widths
                 game.div.style.width = "100%";

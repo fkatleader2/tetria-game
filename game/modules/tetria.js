@@ -21,22 +21,15 @@ tetresse.modules.tetria = {
                 return false;
             }
         }
-        for (var component in this.components)
-            if (this.components[component].setup != null) this.components[component].setup();
     },
     loading() { // loading graphic
         console.log("loading");
     },
     loaded() { // entry point for game
         console.log("loaded");
-        tetresse.setup();
-        var characters = ["warrior", "tank", "juggernaut", "healer", "healer", "mage"];
-        for (var i = 0; i < 6; i++)
-            this.games.push(tetresse.create(document.getElementById("game-" + i), characters[i], {"state.spectating": i == 0 ? false : true}));
-        window.onresize = function() {
-            tetresse.modules.tetria.resize();
-        };
-        tetresse.modules.tetria.resize();
+
+        for (var component in this.components)
+            if (this.components[component].setup != null) this.components[component].setup();
 
         document.getElementById("loading").style.display = "none";
     },
@@ -57,6 +50,28 @@ tetresse.modules.tetria = {
         });
     },
     components: {
+        game: {
+            setup() {
+
+            },
+            init() {
+                $("#tetresse-container")[0].classList.remove("hidden");
+                $("#sidebar-container")[0].classList.remove("hidden");
+
+                tetresse.setup();
+                var characters = ["warrior", "tank", "juggernaut", "healer", "healer", "mage"];
+                for (var i = 0; i < 6; i++)
+                    tetresse.modules.tetria.games.push(tetresse.create(document.getElementById("game-" + i), characters[i], {"state.spectating": i == 0 ? false : true}));
+                window.onresize = function() {
+                    tetresse.modules.tetria.resize();
+                };
+                tetresse.modules.tetria.resize();
+            },
+            clean() {
+                $("#tetresse-container")[0].classList.add("hidden");
+                $("#sidebar-container")[0].classList.add("hidden");
+            }
+        },
         menus: {
             setup() {
                 // close button
@@ -97,6 +112,14 @@ tetresse.modules.tetria = {
                 $("#roomsCreate").on("click", function(e) {
                     tetresse.modules.tetriasocket.rooms.create(document.getElementById("roomsName").innerHTML);
                 });
+                this.init();
+            },
+            init() {
+                $("#rooms-container")[0].classList.remove("hidden");
+            },
+            clean() {
+                this.clear();
+                $("#rooms-container")[0].classList.add("hidden");
             },
             clear() {
 

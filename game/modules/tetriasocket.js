@@ -51,12 +51,16 @@ tetresse.modules.tetriasocket = {
         },
         sortBy(stuff) { /* TODO */},
         create(name) {
+            var c = tetresse.modules.tetria.components;
+            c.rooms.clean(); 
+            c.game.init();
             var socket; if ((socket = this.getSocket()) == null) return;
             socket.emit("roomsCreate", {name: name});
         },
         join(id) {
             var socket; if ((socket = this.getSocket()) == null) return;
             socket.emit("roomsJoin", {id: id});
+
         },
         getSocket() {
             var socket = tetresse.modules.tetriasocket.socket; 
