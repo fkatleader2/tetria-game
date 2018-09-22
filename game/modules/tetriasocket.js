@@ -17,19 +17,19 @@ tetresse.modules.tetriasocket = {
         init() {
             this.socket.on("roomsRefresh", function(data) { // data: [{id, name, curPlayers, maxPlayers}, {}]
                 tetresse.modules.tetriasocket.rooms.log("roomsRefresh", data);
-                tetresse.modules.tetria.rooms.add(data);
+                tetresse.modules.tetria.menus.rooms.add(data);
             });
             this.socket.on("roomsJoined", function(data) { // data: {id}
                 tetresse.modules.tetriasocket.rooms.log("roomsJoined", data);
-                tetresse.modules.tetria.rooms.update({id: data.id}, 1);
+                tetresse.modules.tetria.menus.rooms.update({id: data.id}, 1);
             });
             this.socket.on("roomsLeft", function(data) { // data: {id}
                 tetresse.modules.tetriasocket.rooms.log("roomsLeft", data);
-                tetresse.modules.tetria.rooms.update({id: data.id}, -1);
+                tetresse.modules.tetria.menus.rooms.update({id: data.id}, -1);
             });
             this.socket.on("roomsCreated", function(data) { // data: {id, name, curPlayers, maxPlayers}
                 tetresse.modules.tetriasocket.rooms.log("roomsCreated", data);
-                tetresse.modules.tetria.rooms.add(data);
+                tetresse.modules.tetria.menus.rooms.add(data);
             });
         },
         refresh() {
@@ -59,7 +59,7 @@ tetresse.modules.tetriasocket = {
         logShow: false,
         communication: [],
         init() {
-            
+
         }
     }
 }
