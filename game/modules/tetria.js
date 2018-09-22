@@ -93,6 +93,7 @@ tetresse.modules.tetria = {
                 }
                 for (var v in room)
                     this.rooms[room.id][v] = room[v];
+                room = this.rooms[room.id];
 
                 var ele = document.getElementById("room-" + room.id);
 
