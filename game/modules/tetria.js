@@ -176,7 +176,7 @@ tetresse.modules.tetria = {
             clear() {
 
             },
-            add(rooms) { // rooms can be a single room or array of rooms: {id, name, curPlayers, maxPlayers}
+            add(rooms) { // rooms can be a single room or array of rooms: {id, name, numPlayers, maxPlayers}
                 if (rooms.length == undefined) { rooms = [rooms]; }
                 var table = $('#rooms-list')[0];
                 for (var i = 0; i < rooms.length; i++) {
@@ -189,7 +189,7 @@ tetresse.modules.tetria = {
                     players.classList.add("players");
                     for (var j = 0; j < rooms[i].maxPlayers; j++) {
                         var box = document.createElement("div");
-                        if (j < rooms[i].curPlayers) box.classList.add("filled");
+                        if (j < rooms[i].numPlayers) box.classList.add("filled");
                         players.appendChild(box);
                     }
 
@@ -202,6 +202,9 @@ tetresse.modules.tetria = {
 
                     $("#" + ele.id).on("click", function(e) {
                         tetresse.modules.tetriasocket.rooms.join(e.target.id.substring(5));
+                        var c = tetresse.modules.tetria.components;
+                        c.rooms.clear();
+                        c.game.init();
                     });
                 }
             },
@@ -209,10 +212,10 @@ tetresse.modules.tetria = {
                 var ele = document.getElementById("room-" + room.id);
 
                 var players = ele.children[1];
-                players.forEach(function(e) {
-                    if (i < room.curPlayers) e.classList.add("filled");
-                    else e.classList.remove("filled");
-                });
+                for (var i = 0; i < players.children.length; i++) {
+                    if (i < room.numPlayers) players.children[i].classList.add("filled");
+                    else players.children[i].classList.remove("filled");
+                };
             },
             remove(id) {
                 var ele = document.getElementById("room-" + id);

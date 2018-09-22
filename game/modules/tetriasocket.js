@@ -60,7 +60,6 @@ tetresse.modules.tetriasocket = {
         join(id) {
             var socket; if ((socket = this.getSocket()) == null) return;
             socket.emit("roomsJoin", {id: id});
-
         },
         getSocket() {
             var socket = tetresse.modules.tetriasocket.socket; 
