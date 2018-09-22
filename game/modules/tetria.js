@@ -21,6 +21,8 @@ tetresse.modules.tetria = {
                 return false;
             }
         }
+
+        tetresse.setup();
     },
     loading() { // loading graphic
         console.log("loading");
@@ -58,7 +60,6 @@ tetresse.modules.tetria = {
                 $("#tetresse-container")[0].classList.remove("hidden");
                 $("#sidebar-container")[0].classList.remove("hidden");
 
-                tetresse.setup();
                 var characters = ["warrior", "tank", "juggernaut", "healer", "healer", "mage"];
                 for (var i = 0; i < 6; i++)
                     tetresse.modules.tetria.games.push(tetresse.create(document.getElementById("game-" + i), characters[i], {"state.spectating": i == 0 ? false : true}));
