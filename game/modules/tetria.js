@@ -2,63 +2,139 @@
 tetresse.modules.tetria = {
     games: [],
     sizeGroups: [[0], [1, 2, 3, 4, 5]],
-    setup() {
-        // settings
-        $("#settings-button").click(function(e) {
-            $("#settings-menu-container")[0].classList.toggle("hidden");
-        });
-
-        // exit
-        document.getElementById("exit-button").onclick = function(e) {
-            console.log("exit");
-        }
-
-        // chat send message
-        document.getElementById("chat-input").onkeydown = function(e) {
-            if (e.keyCode === 13 && !e.shiftKey) {
-                console.log("sent text");
-                e.target.innerHTML = "";
-                return false;
-            }
-        }
-    },
+    currentMenu: [],
     loading() { // loading graphic
         console.log("loading");
     },
     loaded() { // entry point for game
         console.log("loaded");
-
         tetresse.setup();
 
+        for (var menu in this.menus)
+            if (this.menus[menu].setup != null) this.menus[menu].setup();
         for (var component in this.components)
             if (this.components[component].setup != null) this.components[component].setup();
 
+        this.goto("rooms");
+        this.goto("settings");
+
         document.getElementById("loading").style.display = "none";
     },
-    resize() { // resize the games to be the same size as their groups
-        tetresse.modules.tetria.games.forEach(function(game) {
-            tetresse.modules.graphics.game.resize(game);
-        });
-        tetresse.modules.tetria.sizeGroups.forEach(function(groupArr) {
-            var min = null;
-            groupArr.forEach(function(num) {
-                var graphics = tetresse.modules.tetria.games[num].modules.graphics;
-                min = min == null || graphics.n < min ? graphics.n : min;
-            });
-            groupArr.forEach(function(num) {
-                var game = tetresse.modules.tetria.games[num];
-                tetresse.modules.graphics.game.resize(game, min);
-            });
-        });
+    goto(menu) { // goes to specified menu
+        if (this.menus[menu].overlay != null && this.menus[menu].overlay) {
+            this.currentMenu.push(menu);
+            this.menus[menu].init();
+            return;
+        }
+        if (this.currentMenu.length != 0) {
+            for (var i = this.currentMenu.length - 1; i >= 0; i--) {
+                if (this.currentMenu[i] == menu) break;
+                this.menus[this.currentMenu.splice(i)[0]].clean();
+            }
+        }
+        if (this.currentMenu.length != 0) return;
+        this.currentMenu.push(menu);
+        this.menus[menu].init();
     },
-    components: {
+    menus: { // setup: onload, init: on navigate, clean: on leave
+        rooms: {
+            setup() {
+                // create room
+                $("#roomsCreate").on("click", function(e) {
+                    tetresse.modules.tetriasocket.rooms.create(document.getElementById("roomsName").innerHTML);
+                    tetresse.modules.tetria.goto("game");
+                });
+                this.init();
+            },
+            init() {
+                $("#rooms-container")[0].classList.remove("hidden");
+            },
+            clean() {
+                this.clear();
+                $("#rooms-container")[0].classList.add("hidden");
+            },
+            rooms: {},
+            add(rooms) { // rooms can be a single room or array of rooms: {id, name, numPlayers, maxPlayers}
+                if (rooms.length == undefined) { rooms = [rooms]; }
+                var table = $('#rooms-list')[0];
+                for (var i = 0; i < rooms.length; i++) {
+                    var room = rooms[i];
+                    this.rooms[room.id] = room;
+
+                    if (table.children.length == 0 || table.children[table.children.length - 1].children.length == 2) {
+                        table.appendChild(document.createElement("div"));
+                    }
+                    var title = document.createElement("span");
+                    title.innerHTML = room.name;
+                    var players = document.createElement("div");
+                    players.classList.add("players");
+                    for (var j = 0; j < room.maxPlayers; j++) {
+                        var box = document.createElement("div");
+                        if (j < room.numPlayers) box.classList.add("filled");
+                        players.appendChild(box);
+                    }
+
+                    var ele = document.createElement("div");
+                    ele.id = "room-" + room.id;
+                    ele.classList.add("button");
+                    ele.appendChild(title);
+                    ele.appendChild(players);
+                    table.children[table.children.length - 1].appendChild(ele);
+
+                    $("#" + ele.id).on("click", function(e) {
+                        tetresse.modules.tetriasocket.rooms.join(e.target.id.substring(5));
+                        var c = tetresse.modules.tetria.components;
+                        c.rooms.clean();
+                        c.game.init();
+                    });
+                }
+            },
+            update(room, amount) {
+                if (room.id == null) { console.log("room does not have id"); return; }
+                if (amount !== undefined)
+                    room.numPlayers += amount;
+                for (var v in room)
+                    this.rooms[room.id][v] = room[v];
+
+                var ele = document.getElementById("room-" + room.id);
+
+                var players = ele.children[1];
+                for (var i = 0; i < players.children.length; i++) {
+                    if (i < room.numPlayers) players.children[i].classList.add("filled");
+                    else players.children[i].classList.remove("filled");
+                };
+            },
+            remove(id) {
+                var ele = document.getElementById("room-" + id);
+                ele.parentNode.removeChild(ele);
+
+                delete this.rooms[id];
+                this.clear();
+                for (var v in this.rooms)
+                    this.add(this.rooms[v]);
+            },
+            clear() {
+                var ele = document.getElementById("rooms-list");
+                while (ele.children.length != 0)
+                    ele.removeChild(ele.children[0]);
+            },
+        },
         game: {
             setup() {
+                $("#settings-button").click(function(e) {
+                    tetresse.modules.tetria.goto("settings");
+                });
 
+                document.getElementById("exit-button").onclick = function(e) {
+                    tetresse.modules.tetria.goto("rooms");
+                }
             },
             init() {
                 $("#tetresse-container")[0].classList.remove("hidden");
                 $("#sidebar-container")[0].classList.remove("hidden");
+
+                tetresse.modules.tetria.components.chat.clear();
+                tetresse.modules.tetria.components.chat.generate(true);
 
                 var characters = ["warrior", "tank", "juggernaut", "healer", "healer", "mage"];
                 for (var i = 0; i < 6; i++)
@@ -72,6 +148,7 @@ tetresse.modules.tetria = {
                 $("#tetresse-container")[0].classList.add("hidden");
                 $("#sidebar-container")[0].classList.add("hidden");
             },
+            spectating: false,
             setupGame(game) {
                 if (!game.state.spectating) { // generate keybinds table
                     // TODO include this in tetresse utils
@@ -96,12 +173,63 @@ tetresse.modules.tetria = {
                 }
             }
         },
+        settings: {
+            overlay: true,
+            setup() {},
+            init() {
+                $("#settings-menu-container")[0].classList.remove("hidden");
+            },
+            clean() {
+                $("#settings-menu-container")[0].classList.add("hidden");
+            }
+        },
+        results: {
+            overlay: true,
+            setup() {},
+            init() {
+                $("#results-container")[0].classList.remove("hidden");
+            },
+            clean() {
+                $("#results-container")[0].classList.add("hidden");
+            }
+        },
+        welcome: { // TODO
+
+        }
+    },
+    resize() { // resize the games to be the same size as their groups
+        tetresse.modules.tetria.games.forEach(function(game) {
+            tetresse.modules.graphics.game.resize(game);
+        });
+        tetresse.modules.tetria.sizeGroups.forEach(function(groupArr) {
+            var min = null;
+            groupArr.forEach(function(num) {
+                var graphics = tetresse.modules.tetria.games[num].modules.graphics;
+                min = min == null || graphics.n < min ? graphics.n : min;
+            });
+            groupArr.forEach(function(num) {
+                var game = tetresse.modules.tetria.games[num];
+                tetresse.modules.graphics.game.resize(game, min);
+            });
+        });
+    },
+    components: {
         chat: {
+            setup() {
+                // chat send message
+                document.getElementById("chat-input").onkeydown = function(e) {
+                    if (e.keyCode === 13 && !e.shiftKey) {
+                        console.log("sent text");
+                        e.target.innerHTML = "";
+                        return false;
+                    }
+                }
+            },
             history: [], // stores messages in format: {name, msg, timeStamp}
             add(uname, message, time = (new Date()).getTime()) {
                 this.history.push({name: uname, msg: message, timeStamp: time})
             },
-            reset() {
+            clear() {
                 this.history = [];
             },
             generate(clear = false) {
@@ -121,14 +249,10 @@ tetresse.modules.tetria = {
 
             }
         },
-        players: {
-            list: [], // stores players names and stuff in format: {name, rank, playing: true | false}
-        },
         menus: {
             setup() {
                 // close button
                 $(".menu-navbar>.close").click(function(e) {
-                    console.log(e);
                     e.target.parentNode.parentNode.parentNode.classList.toggle("hidden");
                 });
                 // navigation buttons
@@ -159,71 +283,6 @@ tetresse.modules.tetria = {
                 });
             },
         },
-        rooms: {
-            setup() {
-                $("#roomsCreate").on("click", function(e) {
-                    tetresse.modules.tetriasocket.rooms.create(document.getElementById("roomsName").innerHTML);
-                });
-                this.init();
-            },
-            init() {
-                $("#rooms-container")[0].classList.remove("hidden");
-            },
-            clean() {
-                this.clear();
-                $("#rooms-container")[0].classList.add("hidden");
-            },
-            clear() {
-
-            },
-            add(rooms) { // rooms can be a single room or array of rooms: {id, name, numPlayers, maxPlayers}
-                if (rooms.length == undefined) { rooms = [rooms]; }
-                var table = $('#rooms-list')[0];
-                for (var i = 0; i < rooms.length; i++) {
-                    if (table.children.length == 0 || table.children[table.children.length - 1].children.length == 2) {
-                        table.appendChild(document.createElement("div"));
-                    }
-                    var title = document.createElement("span");
-                    title.innerHTML = rooms[i].name;
-                    var players = document.createElement("div");
-                    players.classList.add("players");
-                    for (var j = 0; j < rooms[i].maxPlayers; j++) {
-                        var box = document.createElement("div");
-                        if (j < rooms[i].numPlayers) box.classList.add("filled");
-                        players.appendChild(box);
-                    }
-
-                    var ele = document.createElement("div");
-                    ele.id = "room-" + rooms[i].id;
-                    ele.classList.add("button");
-                    ele.appendChild(title);
-                    ele.appendChild(players);
-                    table.children[table.children.length - 1].appendChild(ele);
-
-                    $("#" + ele.id).on("click", function(e) {
-                        tetresse.modules.tetriasocket.rooms.join(e.target.id.substring(5));
-                        var c = tetresse.modules.tetria.components;
-                        c.rooms.clean();
-                        c.game.init();
-                    });
-                }
-            },
-            update(room) {
-                var ele = document.getElementById("room-" + room.id);
-
-                var players = ele.children[1];
-                for (var i = 0; i < players.children.length; i++) {
-                    if (i < room.numPlayers) players.children[i].classList.add("filled");
-                    else players.children[i].classList.remove("filled");
-                };
-            },
-            remove(id) {
-                var ele = document.getElementById("room-" + id);
-                ele.parentNode.removeChild(ele);
-
-                // TODO collapse following elements
-            }
-        }
     },
     
 };

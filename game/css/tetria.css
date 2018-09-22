@@ -162,6 +162,7 @@ body {
 
     #options-area {
         background: #e4e4ff;
+        color: black;
         height: 10%;
         width: 90%;
         margin-top: 2.5%;
@@ -180,8 +181,7 @@ body {
     }
 
     #settings-button {
-        background-color: #45454c;
-        color: white;
+        background-color: #ababae;
         display: table-cell;
         vertical-align: middle;
         text-align: center;
@@ -189,7 +189,7 @@ body {
     }
 
     #settings-button:hover {
-        background-color: #6f6f79;
+        background-color: #858585;
     }
 
     #exit-button-container {
@@ -202,8 +202,7 @@ body {
     }
 
     #exit-button {
-        background-color: #af0d0d;
-        color: white;
+        background-color: #ef7878;
         text-align: center;
         margin: auto;
         display: table-cell;
@@ -212,7 +211,7 @@ body {
     }
 
     #exit-button:hover {
-        background-color: #e44d4d;
+        background-color: #dc4444;
     }
 
 /* results */
@@ -241,23 +240,24 @@ body {
     #settings-menu-container {
         background-color: #4140a0;
         position: absolute;
-        margin-top: 5%;
-        left: 10%;
-        width: 60%;
-        padding-top: 40%;
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 50px;
+        width: 600px;
+        height: 500px;
+        /*padding-top: 40%;*/
         border-radius: 10px;
         z-index: 80;
     }
 
     #settings-menu {
         background-color: #e4e4ff;
-        position: absolute;
         display: inline-block;
-        top: 2%;
-        left: 2%;
-        width: 94%;
-        height: 90%;
-        padding: 2% 1%;
+        margin: 10px;
+        height: 470px;
+        width: 560px;
+        padding: 5px 10px;
         border-radius: 5px;
         font-size: 1.5vw;
     }
