@@ -81,7 +81,7 @@ tetresse.modules.tetria = {
 
                     $("#" + ele.id).on("click", function(e) {
                         tetresse.modules.tetriasocket.rooms.join(e.target.id.substring(5));
-                        tetresse.modules.tetria.goto("play");
+                        tetresse.modules.tetria.goto("game");
                     });
                 }
             },
