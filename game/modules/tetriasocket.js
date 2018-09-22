@@ -14,7 +14,7 @@ tetresse.modules.tetriasocket = {
         // emit: join, create, leave
         this.socket.on("roomsRefresh", function(data) { // data: [{id, name, curPlayers, maxPlayers}, {}]
             for (var i = 0; i < data.length; i++)
-                tetress.modules.tetriasocket.rooms.add(data[i]);
+                tetresse.modules.tetriasocket.rooms.add(data[i]);
         });
         this.socket.on("roomsJoined", function(data) { // data: {id} TODO make this neater
             var r = tetresse.modules.tetriasocket.rooms;
