@@ -30,6 +30,7 @@
         </div>
     </div>
     <div id="settings-menu-container" class="hidden">
+        <div class="gBlocker"></div>
         <div id="settings-menu">
             <div class="menu-navbar">
                 <span class="title">Settings:</span>
@@ -66,7 +67,7 @@
             </div>
         </div>
     </div>
-    <div id="tetresse-container" class="hidden">
+    <div id="game-container" class="hidden">
         <tetresse>
             <div id="game-0"></div>
             <div id="game-1"></div>
@@ -75,46 +76,46 @@
             <div id="game-4"></div>
             <div id="game-5"></div>
         </tetresse>
-    </div>
-    <div id="sidebar-container" class="hidden">
-        <div id="sidebar">
-            <div id="player-list">
-                <ul class="wrapChildText">
-                    <!--<li>player1</li>
-                    <li>player2asdfasdfasdfadfasdfadfas</li>
-                    <li>player3</li>
-                    <li>player4</li>
-                    <li>player5</li>
-                    <li>player6</li>
-                    <hr> -->
-                </ul>
-            </div>
-            <div id="chat-area-container" onload="updateScroll()">
-                <div id="chat-area" class="wrapChildText">
-                    <!--<div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
-                    <div>p2: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
-                    <div>p1: asfawoeijfawfjoeijawefafwoejoia wfjoaw</div>
-                    <div>p2: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
-                    <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
-                    <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
-                    <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div -->
+        <div id="sidebar-container">
+            <div id="sidebar">
+                <div id="player-list">
+                    <ul class="wrapChildText">
+                        <!--<li>player1</li>
+                        <li>player2asdfasdfasdfadfasdfadfas</li>
+                        <li>player3</li>
+                        <li>player4</li>
+                        <li>player5</li>
+                        <li>player6</li>
+                        <hr> -->
+                    </ul>
                 </div>
-                <script>
-                    function updateScroll() { // TODO add this to tetria.js
-                        var ele = document.getElementById("#chat-area");
-                        element.scrollTop = element.scrollHeight;
-                    }
-                </script>
-            </div>
-            <div id="chat-message" class="wrapChildText">
-                <div id="chat-input" contenteditable="true"></div>
-            </div>
-            <div id="options-area">
-                <div id="settings-button-container">
-                    <div id="settings-button" class="button">Settings</div>
+                <div id="chat-area-container" onload="updateScroll()">
+                    <div id="chat-area" class="wrapChildText">
+                        <!--<div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                        <div>p2: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                        <div>p1: asfawoeijfawfjoeijawefafwoejoia wfjoaw</div>
+                        <div>p2: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                        <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                        <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div>
+                        <div>p1: asfawoeijf awfjoeij awef  afwoejoia wfjoaw</div -->
+                    </div>
+                    <script>
+                        function updateScroll() { // TODO add this to tetria.js
+                            var ele = document.getElementById("#chat-area");
+                            element.scrollTop = element.scrollHeight;
+                        }
+                    </script>
                 </div>
-                <div id="exit-button-container">
-                    <div id="exit-button" class="button">Exit</div>
+                <div id="chat-message" class="wrapChildText">
+                    <div id="chat-input" contenteditable="true"></div>
+                </div>
+                <div id="options-area">
+                    <div id="settings-button-container">
+                        <div id="settings-button" class="button">Settings</div>
+                    </div>
+                    <div id="exit-button-container">
+                        <div id="exit-button" class="button">Exit</div>
+                    </div>
                 </div>
             </div>
         </div>

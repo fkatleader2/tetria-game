@@ -2,7 +2,7 @@ tetresse.modules.tetriasocket = {
     socket: null,
     setup() {
         try {
-            this.socket = this.rooms.socket = io("https://tetria.tetresse.com");
+            this.socket = this.game.socket = this.rooms.socket = io("https://tetria.tetresse.com");
             console.log("connected");
             this.rooms.init();
         } catch(e) {
@@ -16,19 +16,19 @@ tetresse.modules.tetriasocket = {
         communication: [],
         init() {
             this.socket.on("roomsRefresh", function(data) { // data: [{id, name, curPlayers, maxPlayers}, {}]
-                this.log("roomsRefresh", data);
+                tetresse.modules.tetriasocket.rooms.log("roomsRefresh", data);
                 tetresse.modules.tetria.rooms.add(data);
             });
             this.socket.on("roomsJoined", function(data) { // data: {id}
-                this.log("roomsJoined", data);
+                tetresse.modules.tetriasocket.rooms.log("roomsJoined", data);
                 tetresse.modules.tetria.rooms.update({id: data.id}, 1);
             });
             this.socket.on("roomsLeft", function(data) { // data: {id}
-                this.log("roomsLeft", data);
+                tetresse.modules.tetriasocket.rooms.log("roomsLeft", data);
                 tetresse.modules.tetria.rooms.update({id: data.id}, -1);
             });
             this.socket.on("roomsCreated", function(data) { // data: {id, name, curPlayers, maxPlayers}
-                this.log("roomsCreated", data);
+                tetresse.modules.tetriasocket.rooms.log("roomsCreated", data);
                 tetresse.modules.tetria.rooms.add(data);
             });
         },
@@ -53,7 +53,13 @@ tetresse.modules.tetriasocket = {
             if (this.logShow) { console.log("-----\n" + msg); console.log(data); }
         }
     },
-    initGames() {
-
+    game: { // action, chat, leave | oAction, joined, left
+        socket: null,
+        logCommunication: true,
+        logShow: false,
+        communication: [],
+        init() {
+            
+        }
     }
 }
