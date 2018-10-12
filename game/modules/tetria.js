@@ -15,7 +15,7 @@ tetresse.modules.tetria = {
         for (var component in this.components)
             if (this.components[component].setup != null) this.components[component].setup();
 
-        this.goto("rooms");
+        this.goto("game");
 
         document.getElementById("loading").style.display = "none";
     },
@@ -95,6 +95,8 @@ tetresse.modules.tetria = {
                     this.rooms[room.id][v] = room[v];
                 room = this.rooms[room.id];
 
+                if (this.rooms[room.id].numPlayers <= 0) this.remove(room.id);
+
                 var ele = document.getElementById("room-" + room.id);
 
                 var players = ele.children[1];
@@ -135,8 +137,10 @@ tetresse.modules.tetria = {
                 tetresse.modules.tetria.components.chat.generate(true);
 
                 var characters = ["warrior", "tank", "juggernaut", "healer", "healer", "mage"];
-                for (var i = 0; i < 6; i++)
+                for (var i = 0; i < 6; i++) {
                     tetresse.modules.tetria.games.push(tetresse.create(document.getElementById("game-" + i), characters[i], {"state.spectating": i == 0 ? false : true}));
+                    if (i != 0) tetresse.modules.tetria.games[i].div.style.display = "none";
+                }
                 // window.onresize = function() {
                 //     tetresse.modules.tetria.resize();
                 // };
@@ -158,7 +162,7 @@ tetresse.modules.tetria = {
                 //     });
                 // },
 
-                tetresse.modules.tetria.resize();
+                //tetresse.modules.tetria.resize();
             },
             clean() {
                 $("#game-container")[0].classList.add("hidden");

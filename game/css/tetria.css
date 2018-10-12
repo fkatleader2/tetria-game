@@ -85,26 +85,26 @@ body {
             right: 10px;
             top: 50px;
             position: absolute;
-            font-size: 1.1vw;
+            font-size: 14px;
         }
 
         #sidebar {
             position: absolute;
             top: 0px; right: 0;
-            width: 90%;
-            height: 96%;
+            width: 180px;
+            height: 480px;
             background: #4140a0;
             border-radius: 10px;
-            padding: 5%;
+            padding: 5px;
         }
 
         #player-list {
-            height: 20%;
+            height: 100px;
             border-radius: 5px;
             background: #e4e4ff;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 2.5% 5% 2.5% 5%;
+            padding: 5px 10px 0 10px;
         }
 
         #player-list ul {
@@ -114,7 +114,7 @@ body {
         }
 
         #player-list ul li {
-            margin-bottom: 1%;
+            margin-bottom: 2px;
         }
 
         #player-list ul li:hover {
@@ -123,38 +123,38 @@ body {
         }
 
         #chat-area-container {
-            height: 50%;
-            margin-top: 2.5%;
-            padding: 2% 1% 2% 1%;
+            height: 240px;
+            margin-top: 5px;
+            padding: 4px 2px 4px 2px;
             border-radius: 5px 5px 0 0;
             position: relative;
             background: #e4e4ff;
         }
 
         #chat-area {
-            height: 96%;
+            height: 230px;
             position: relative;
             background: #fbfbff;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 2.5% 5% 2.5% 5%;
+            padding: 4px 8px 4px 8px;
             border-radius: 3px;
         }
 
         #chat-message {
-            height: 10%;
+            height: 60px;
             border-top: 1px solid #2a2972;
             border-radius: 0 0 5px 5px;
             background: #e4e4ff;
-            padding: 2.5% 1% 2.5% 1%;
+            padding: 2px 5px 2px 5px;
         }
 
         #chat-input {
             background-color: white;
             outline: none;
-            width: 94%;
-            height: 94%;
-            padding: 1% 3%;
+            width: 160px;
+            height: 55px;
+            padding: 2px 5px;
             resize: none;
             overflow-y: auto;
             overflow-x: hidden;
@@ -163,20 +163,20 @@ body {
         #options-area {
             background: #e4e4ff;
             color: black;
-            height: 10%;
-            width: 90%;
-            margin-top: 2.5%;
+            height: 50px;
+            width: 180px;
+            margin-top: 5px;
             position: absolute;
-            bottom: 2.5%;
+            bottom: 5px;
             border-radius: 5px;
         }
 
         #settings-button-container {
             position: absolute;
-            top: 10%;
-            left: 5%;
-            width: 40%;
-            height: 80%;
+            top: 5px;
+            left: 5px;
+            width: 80px;
+            height: 40px;
             display: table;
         }
 
@@ -185,7 +185,7 @@ body {
             display: table-cell;
             vertical-align: middle;
             text-align: center;
-            font-size: 1.75vw;
+            font-size: 17px;
         }
 
         #settings-button:hover {
@@ -194,10 +194,10 @@ body {
 
         #exit-button-container {
             position: absolute;
-            right: 5%;
-            top: 10%;
-            width: 40%;
-            height: 80%;
+            right: 5px;
+            top: 5px;
+            width: 80px;
+            height: 40px;
             display: table;
         }
 
@@ -207,7 +207,7 @@ body {
             margin: auto;
             display: table-cell;
             vertical-align: middle;
-            font-size: 1.75vw;
+            font-size: 23px;
         }
 
         #exit-button:hover {

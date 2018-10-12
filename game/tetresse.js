@@ -3,7 +3,7 @@ const tetresse = {
         for (var v in tetresse.modules)
             if (tetresse.modules[v].setup != null)
                 tetresse.modules[v].setup();
-        $(document).keydown(function(e) {
+        var funcDown = function(e) {
             if (tetresse.settings.keyBinds[e.keyCode] == null) return;
             if (tetresse.settings.keyBinds[e.keyCode].down != null && tetresse.settings.keyBinds[e.keyCode].down) return;
             tetresse.settings.keyBinds[e.keyCode].down = true;
@@ -12,8 +12,8 @@ const tetresse = {
                 if (ele.down == null || ele.down.func == null) continue;
                 tetresse.q.add(ele.down.func, ele.down.args);
             }
-        });
-        $(document).keyup(function(e) {
+        }
+        var funcUp = function(e) {
             if (tetresse.settings.keyBinds[e.keyCode] == null) return;
             if (tetresse.settings.keyBinds[e.keyCode].down == null || !tetresse.settings.keyBinds[e.keyCode].down) return;
             tetresse.settings.keyBinds[e.keyCode].down = false;
@@ -22,15 +22,23 @@ const tetresse = {
                 if (ele.up == null || ele.up.func == null) continue;
                 tetresse.q.add(ele.up.func, ele.up.args);
             }
-        });
+        }
+        if (typeof $ === 'undefined') { // jquery included
+            document.onkeydown = funcDown;
+            document.onkeyup = funcUp;
+        } else {
+            $(document).keydown(funcDown);
+            $(document).keyup(funcUp);
+        }
     },
     create(div = document.createElement("div"), mode = "default", args = {}) { // returns created game object
         args.div = div;
         args.mode = mode;
         var game = tetresse.get("generateGame")(args);
         div.classList.add("game");
-        if (div.id == "") div.id = game.id = "game-" + $("tetresse")[0].children.length;
-        $("tetresse")[0].appendChild(div);
+        var tetresseElement = document.getElementsByTagName("tetresse")[0];
+        if (div.id == "") div.id = game.id = "game-" + tetresseElement.children.length;
+        tetresseElement.appendChild(div);
 
         tetresse.get("s.modules", game).forEach(function(label) {
             var temp = tetresse.modules[label].game;
@@ -47,7 +55,7 @@ const tetresse = {
         tetresse.execute("startGame", null, game.listeners);
         if (!game.state.spectating) {
             tetresse.get("enableKeybinds", game)(game);
-            game.div.tabIndex = "1";
+            // game.div.tabIndex = "1";
         }
         // console.log(game);
 
@@ -140,7 +148,7 @@ const tetresse = {
                 boardWidth: 10,
                 boardHeight: 40,
                 shownHeight: 20.5,
-                modules: ["graphics", "characters", "tetria"], // TODO make it so that games can have uniquely added modules
+                modules: ["graphics"], // TODO make it so that games can have uniquely added modules
                 upNext: 5,
                 graphicsComponents: ["board", "background", "hold", "next"],
                 spectatorGraphicsComponents: ["board", "background"],
@@ -148,7 +156,7 @@ const tetresse = {
                 DAS: 125, // in ms
                 ARR: 16, // in ms
                 downDelay: 40, // in ms
-                lineClearDelay: 500, // in ms
+                lineClearDelay: 0, // in ms
                 gravity: true,
                 gravitySpeed: 1000, // in ms
                 gravityStall: 15, // number of times you can stall
@@ -248,15 +256,16 @@ const tetresse = {
                 game.cur.hold = game.cur.piece;
                 if (args.show == null || args.show)
                     tetresse.execute("graphicsHold", game.cur.hold, game.listeners);
+                tetresse.execute("hold", game.cur.hold, game.listeners);
                 tetresse.get("nextPiece", game)(game, {piece: temp});
             },
             movePiece(game, args = {amount: 0, show: true}) { // args is number of tiles to move (positive right, negative left)
                 var valid = tetresse.get("isPieceValid", game)(game, {layout: game.cur.layout, x: game.cur.loc.x + args.amount, y: game.cur.loc.y});
-                if (valid){ 
+                if (valid) { 
                     game.cur.loc.x += args.amount;
                     if (args.show == null || args.show) tetresse.modules.graphics.game.components.board.piece(game);
+                    tetresse.execute("move", game.cur.loc.x, game.listeners);
                 }
-                tetresse.execute("movePiece", valid, game.listeners);
                 return valid;
             },
             rotatePiece(game, args = {direction: 1, show: true}) { // rotates piece cw or ccw depending on direction (-1: ccw, 1: cw)
@@ -275,12 +284,11 @@ const tetresse = {
                         game.cur.rot = (game.cur.rot + args.direction + 4) % 4;
                         if (args.show == null || args.show) {
                             tetresse.modules.graphics.game.components.board.piece(game);
-                            tetresse.execute("rotatePiece", true, game.listeners);
+                            tetresse.execute("rotate", game.cur.rot, game.listeners);
                         }
                         return true;
                     }
                 }
-                tetresse.execute("rotatePiece", false, game.listeners);
                 return false;
             },
             /**
@@ -302,7 +310,7 @@ const tetresse = {
                     game.cur.loc.y++;
                     if (args.show == null || args.show) {
                         tetresse.modules.graphics.game.components.board.piece(game);
-                        // tetresse.execute("dropPiece", false, game.listeners);
+                        tetresse.execute("drop", game.cur.loc.y, game.listeners);
                     }
                     return true;
                 }
@@ -319,6 +327,7 @@ const tetresse = {
                         for (var c = 0; c < layout.length; c++)
                             if (layout[r][c] == 1)
                                 game.board[r + game.cur.loc.y][c + game.cur.loc.x] = game.cur.piece;
+                    tetresse.execute("placedPiece", {p: game.cur.piece, l: {y: game.cur.loc.y, x: game.cur.loc.x}, r: game.cur.rot}, game.listeners);
                     game.cur.piece = null;
                     game.state.holdUsed = false;
                 }
@@ -458,7 +467,7 @@ const tetresse = {
                         gravity: {loop: null, count: -1, events: ["nextPiece", "movePiece", "sdControl", "rotatePiece"]},
                         pausedKeybinds: false,
                         cleanup: false,
-                        spectating: false,
+                        spectating: args["state.spectating"] != null ? args["state.spectating"] : false,
                     },
                     keyBinds: {
                         left: [37],
