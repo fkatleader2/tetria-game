@@ -15,7 +15,7 @@ tetresse.modules.tetria = {
         for (var component in this.components)
             if (this.components[component].setup != null) this.components[component].setup();
 
-        this.goto("game");
+        this.goto("rooms");
 
         document.getElementById("loading").style.display = "none";
     },
