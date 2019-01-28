@@ -16,6 +16,7 @@ The core DOM is all included under [index.html](#test). CSS dictates the layout 
 The two "types" of the parts that make up the UI are **views** and **components**. **Views** can be considered entire pages such as the rooms, play, settings, and results. A view is "setup" when the page is loaded, "build" when the view is shown, and "clean"ed when it is hidden. Views are *stateful* ie, they can store information which may change at runtime. This is used for keeping track of tetresse games created, rooms shown, chat history, etc. **Components** are parts of views such as chat, rooms list, creating a room, tabs menu (in settings and results), etc. Components have functions "create", "build" and "clean". However, components are constructed by views so while there is only one version of every view, there may be multiple instances of components. When a component is setup, a deep copy is made of its DOM structure and added the view. Components themselves don't store any information, and instead store relevant data in the view they are constructed in (chat is a component, but the chat history is stored in the view state).
 
 When the page loads the actions for the page to display are: 
+
 *tetresse v3 setup -> tetriaMaster setup -> views setup -> components create -> goto*
 
 To change menu (view), change "lobby" to whatever the view's label is (:
@@ -26,7 +27,9 @@ To change menu (view), change "lobby" to whatever the view's label is (:
 ## Files
 Below are all client files for tetria-game
 <a name="file-index"></a>
+
 **index.html**
+
 Body contains header and a series of divs corresponding to different views. At the bottom is a div containing the template for the different components used by the views. Note that div containing the views are hidden by default (visibility is controlled by tetriaMaster.js)
 ```html
 <head><!-- standard files included --></head>
